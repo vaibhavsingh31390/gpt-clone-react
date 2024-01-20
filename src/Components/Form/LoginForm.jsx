@@ -6,12 +6,18 @@ import CustomInput from "./../UI/Elements/CustomInput";
 import CustomButton from "./../UI/Elements/CustomButton";
 import useSetActive from "./../../Hooks/ActiveHook.js";
 import routes from "./../../Utils/Routes.js";
+import ToastService from "./../UI/Toaster/ToastService.jsx";
 const LoginForm = () => {
   const userEmailRef = useRef(null);
   const userPassRef = useRef(null);
   const activeHook = useSetActive();
   const loginHandler = async (e) => {
     e.preventDefault();
+    if (userEmailRef.current.value === "") {
+      return ToastService("Email is required.", false);
+    } else if (userPassRef.current.value === "") {
+      return ToastService("Password is required.", false);
+    }
     try {
       const response = await fetch(`${routes.host}${routes.login}`, {
         method: "POST",
@@ -28,6 +34,7 @@ const LoginForm = () => {
         const data = await response.json();
         localStorage.setItem("jwt", data.payload.token);
         localStorage.setItem("user_data", JSON.stringify(data.payload.users));
+        ToastService("Logged in successfully.", true);
         setTimeout(() => {
           window.location.reload();
         }, 500);
