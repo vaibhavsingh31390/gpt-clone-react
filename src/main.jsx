@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import AuthProvider from "./store/AuthProvider.jsx";
 import ChatProvider from "./store/ChatContextProvider.jsx";
-import ToastPortal from "./components/ui/toaster/ToastPortal.jsx";
+import ToastPortal from "./Components/UI/Toaster/ToastPortal.jsx";
 ReactDOM.createRoot(document.getElementById("main")).render(
   <AuthProvider>
     <ChatProvider>
