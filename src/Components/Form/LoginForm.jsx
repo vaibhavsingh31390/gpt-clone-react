@@ -27,6 +27,7 @@ const LoginForm = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("jwt", data.payload.token);
+        localStorage.setItem("user_data", JSON.stringify(data.payload.users));
         setTimeout(() => {
           window.location.reload();
         }, 500);
