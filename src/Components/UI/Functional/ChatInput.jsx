@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import "./ChatInput.css";
 import { Form, Button } from "react-bootstrap";
-import CustomTextarea from "./../elements/CustomTextarea";
+import CustomTextarea from "./../Elements/CustomTextarea";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 import ChatContext from "./../../../store/chat-context";
