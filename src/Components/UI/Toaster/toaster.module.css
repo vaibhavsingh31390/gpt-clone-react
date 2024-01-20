@@ -1,0 +1,14 @@
+.toast-custom {
+  background-color: var(--white); /* White background color */
+}
+.toast-custom .Toastify__progress-bar--success {
+  background: var(--purple) !important;
+}
+
+.toast-custom .Toastify__toast-body {
+  color: var(--purple);
+}
+
+.toast-custom svg {
+  fill: var(--purple);
+}

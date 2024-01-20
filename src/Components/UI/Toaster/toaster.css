@@ -1,0 +1,29 @@
+#toaster--success {
+  background-color: var(--white) !important;
+  color: var(--purple) !important;
+}
+#toaster--success .Toastify__toast-icon svg {
+  fill: var(--purple) !important;
+}
+#toaster--success .Toastify__progress-bar {
+  background-color: var(--purple) !important;
+}
+
+#toaster--success .Toastify__icon {
+  color: var(--purple) !important;
+}
+
+#toaster--error {
+  background-color: var(--white) !important;
+  color: var(--purple) !important;
+}
+#toaster--error .Toastify__toast-icon svg {
+  fill: var(--purple) !important;
+}
+#toaster--error .Toastify__progress-bar {
+  background-color: var(--purple) !important;
+}
+
+#toaster--error .Toastify__icon {
+  color: var(--red) !important;
+}

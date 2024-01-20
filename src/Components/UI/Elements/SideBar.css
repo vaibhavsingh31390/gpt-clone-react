@@ -1,0 +1,42 @@
+.gpt-cl-sidebar {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: var(--white);
+  max-height: 100vh;
+  transition: background-color 0.8s;
+  overflow: hidden;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+
+.gpt-cl-dashboard.toggle-mode.stand-by .gpt-cl-sidebar > *,
+.gpt-cl-dashboard.stand-by .gpt-cl-sidebar > * {
+  opacity: 0;
+}
+
+.gpt-cl-sidebar-top {
+  overflow-y: scroll;
+  min-height: 90svh;
+  max-height: 90svh;
+}
+
+.gpt-cl-sidebar-top::-webkit-scrollbar {
+  opacity: 0;
+  width: 6px;
+}
+
+.gpt-cl-sidebar-top:hover::-webkit-scrollbar {
+  opacity: 1;
+  width: 6px;
+}
+
+.gpt-cl-sidebar-top::-webkit-scrollbar-thumb {
+  background-color: var(--black);
+}
+
+.gpt-cl-sidebar-top:hover::-webkit-scrollbar-thumb {
+  background-color: var(--purple);
+}
+
+.gpt-cl-sidebar-top::-webkit-scrollbar-track {
+  background-color: var(--black);
+}

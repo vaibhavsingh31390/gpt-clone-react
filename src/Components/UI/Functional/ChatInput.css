@@ -1,0 +1,30 @@
+.chat--input--area {
+  padding: 10px 40px;
+}
+
+@media only screen and (max-width: 768px) {
+  .chat--input--area {
+    padding: 10px 10px !important;
+  }
+}
+
+.chat--submit--input {
+  position: relative;
+}
+
+.chat--submit--button {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translate(0, -50%);
+  background-color: var(--purple);
+  color: var(--white);
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.chat--submit--button:hover {
+  background-color: var(--black) !important;
+  color: var(--white) !important;
+}

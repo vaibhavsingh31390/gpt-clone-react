@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --black: #000000;
+  --purple: #837692;
+  --white: #ffffff;
+  --red: #ff0000;
+  --transp: rgba(255, 255, 255, 0.3);
+  --border-purple: 1px solid var(--purple);
+  --border-black: 1px solid var(--black);
+  --border-white: 1px solid var(--white);
+  --border-transp: 1px solid var(--tranp);
+}
+
+body {
+  background-color: var(--white) !important;
+  color: var(--black) !important;
+  overflow-x: hidden;
+}
+
+.button {
+  background-color: var(--purple) !important;
+  color: var(--white) !important;
+  border: 2px solid var(--purple) !important;
+}
+
+/* Heading Styles */
+h1,
+.heading1 {
+  font-size: 2.5rem !important;
+  font-weight: bold !important;
+}
+
+h2,
+.heading2 {
+  font-size: 2rem !important;
+  font-weight: bold !important;
+}
+
+h3,
+.heading3 {
+  font-size: 1.75rem !important;
+  font-weight: bold !important;
+}
+
+h4,
+.heading4 {
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+}
+
+h5,
+.heading5 {
+  font-size: 1.25rem !important;
+  font-weight: bold !important;
+}
+
+/* Paragraph Styles */
+p,
+.paragraph {
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+}
+
+/* Span Styles */
+span,
+.inline {
+  color: var(--black) !important;
+}
+
+/* Responsive Styles for Bootstrap */
+@media (min-width: 768px) {
+  h1,
+  .heading1 {
+    font-size: 3rem !important;
+  }
+
+  h2,
+  .heading2 {
+    font-size: 2.5rem !important;
+  }
+
+  h3,
+  .heading3 {
+    font-size: 2rem !important;
+  }
+
+  h4,
+  .heading4 {
+    font-size: 1.75rem !important;
+  }
+
+  h5,
+  .heading5 {
+    font-size: 1.5rem !important;
+  }
+}

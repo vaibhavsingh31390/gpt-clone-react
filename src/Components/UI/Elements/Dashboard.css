@@ -1,0 +1,27 @@
+.gpt-cl-dashboard {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(250px, 17%) 1fr;
+  transition: grid-template-columns 0.3s ease;
+}
+
+.gpt-cl-dashboard.toggle-mode {
+  transition: grid-template-columns 0.3s ease;
+  grid-template-columns: minmax(0px, 0%) 1fr;
+}
+
+@media only screen and (max-width: 767px) {
+  .gpt-cl-dashboard {
+    grid-template-columns: minmax(300px, 17%) 1fr;
+  }
+}
+
+.menu-toggle-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}

@@ -1,0 +1,82 @@
+.account--button--wrapper {
+  position: relative;
+  background-color: var(--black);
+  min-height: 10svh;
+  max-height: 10svh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.account-button {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2px;
+  border-radius: 5px;
+  padding: 10px;
+  transition: background-color 0.25s ease-in-out;
+  cursor: pointer;
+  background-color: transparent;
+  border: transparent;
+  color: var(--white);
+}
+
+.account-button:hover,
+.account-button:focus {
+  background-color: var(--transp);
+}
+
+.gpt-cl-logo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.gpt-cl-btn-txt {
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.gpt-cl-btn-action {
+  position: absolute;
+  left: 0;
+  border: 1px solid var(--purple);
+  width: 100%;
+  margin-bottom: 155px;
+  background-color: var(--purple);
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.gpt-cl-btn-action.active {
+  opacity: 1;
+}
+
+.gpt-cl-btn-action-list {
+  list-style: none;
+}
+
+.gpt-cl-btn-action-list-item {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--white);
+  width: 100%;
+  transition: background-color 0.25s ease-in-out;
+  cursor: pointer;
+  padding: 10px;
+  text-align: left;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+.gpt-cl-btn-action-list-item:first-child {
+  border-bottom: var(--border-transp);
+}
+
+.gpt-cl-btn-action-list-item:hover {
+  background-color: var(--transp);
+}

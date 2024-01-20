@@ -1,0 +1,45 @@
+.Button--loader {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.Button-wrapper {
+}
+
+.custom--button {
+  /* margin-top: 5px; */
+  background-color: var(--purple);
+  color: var(--white);
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  width: 100%;
+}
+
+.custom--button:hover {
+  background-color: var(--black) !important;
+  color: var(--white) !important;
+}
+
+.loader-wrapper {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.375rem;
+}
+
+
+.chat--submit--button{
+  position: absolute;
+  width: 23%;
+}

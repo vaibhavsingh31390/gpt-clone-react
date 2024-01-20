@@ -1,0 +1,21 @@
+.gpt-cl-ResponseView-wrapper {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.gpt-cl-ResponseView {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--black);
+  display: grid;
+  grid-template-rows: minmax(85%, 85%) 1fr;
+  transition: grid-template-rows 0.3s ease;
+  overflow: hidden;
+  visibility: visible;
+}
+
+@media only screen and (max-width: 768px) {
+  .gpt-cl-ResponseView {
+    visibility: hidden;
+  }
+  .gpt-cl-dashboard.toggle-mode .gpt-cl-ResponseView {
+    visibility: visible;
+  }
+}

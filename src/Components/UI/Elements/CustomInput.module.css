@@ -1,0 +1,24 @@
+/* --black: #000000;
+--purple: #837692;
+--white: #ffffff; */
+
+.custom-input {
+  background-color: var(--white);
+  color: var(--black);
+  border-color: var(--black);
+  box-shadow: none;
+}
+
+.custom-input:focus {
+  border-color: var(--purple);
+  box-shadow: none;
+}
+
+.custom-input:hover {
+  border-color: var(--purple);
+  box-shadow: none;
+}
+
+.custom-input-label {
+  color: var(--purple);
+}
