@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./form.module.css";
 import CustomInput from "./../UI/Elements/CustomInput";
@@ -11,8 +11,10 @@ const LoginForm = () => {
   const userEmailRef = useRef(null);
   const userPassRef = useRef(null);
   const activeHook = useSetActive();
+  const [loading, setLoading] = useState(false);
   const loginHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (userEmailRef.current.value === "") {
       return ToastService("Email is required.", false);
     } else if (userPassRef.current.value === "") {
@@ -30,6 +32,12 @@ const LoginForm = () => {
         },
         credentials: "include",
       });
+      if (!response.ok) {
+        const data = await response.json();
+        setLoading(false);
+        return ToastService(data.Message, false);
+      }
+
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("jwt", data.payload.token);
@@ -38,6 +46,7 @@ const LoginForm = () => {
         setTimeout(() => {
           window.location.reload();
         }, 500);
+        setLoading(false);
         console.log(data);
       }
     } catch (error) {
@@ -78,6 +87,7 @@ const LoginForm = () => {
           <CustomButton
             type={"submit"}
             value={"Submit"}
+            loader={loading}
             onClickHandler={(e) => {
               loginHandler(e);
             }}
