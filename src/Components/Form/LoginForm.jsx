@@ -51,6 +51,7 @@ const LoginForm = () => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
   return (
