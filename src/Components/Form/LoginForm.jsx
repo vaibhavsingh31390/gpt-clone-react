@@ -14,13 +14,13 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const loginHandler = async (e) => {
     e.preventDefault();
-    setLoading(true);
     if (userEmailRef.current.value === "") {
       return ToastService("Email is required.", false);
     } else if (userPassRef.current.value === "") {
       return ToastService("Password is required.", false);
     }
     try {
+      setLoading(true);
       const response = await fetch(`${routes.host}${routes.login}`, {
         method: "POST",
         body: JSON.stringify({
