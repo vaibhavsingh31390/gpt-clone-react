@@ -1,9 +1,13 @@
+import { API_HOST, API_HOST_DEV, APP_ENV } from "./../../config";
+
 const routes = {
-  host: `https://gpt-backend-one.vercel.app`,
-  // host: `http://127.0.0.1:6050`,
+  host: APP_ENV === "DEV" ? API_HOST_DEV : API_HOST,
   login: `/api/v1/users/login`,
+  logout: `/api/v1/users/logout`,
   register: `/api/v1/users/register`,
   fetchAllChats: `/api/v1/chats/get`,
+  fetchSingleChat: `/api/v1/chats/get/`,
+  deleteSingleChat: `/api/v1/chats/delete/`,
 };
 
 export default routes;

@@ -6,6 +6,7 @@ import "./SideBar.css";
 import { UserProfileActionsReducer } from "./../../../Utils/reducers-methods.js";
 import { Col } from "react-bootstrap";
 import ChatContext from "./../../../store/chat-context.js";
+import { handleLogoutRequest } from "../../../Utils/methods.js";
 
 function SideBar() {
   const chatCtx = useContext(ChatContext);
@@ -23,8 +24,10 @@ function SideBar() {
   const handleSettings = () => {
     userActionDispatch({ type: "SETTING" });
   };
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await handleLogoutRequest();
     userActionDispatch({ type: "LOGOUT" });
+    window.location.reload();
   };
   return (
     <Col md={12} lg={12} sm={12}>

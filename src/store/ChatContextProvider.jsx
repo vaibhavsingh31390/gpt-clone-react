@@ -16,8 +16,12 @@ const ChatProvider = ({ children }) => {
       },
     ],
   });
-  const itemListAction = () => {
-    dispatch({ type: "ITEM_LIST" });
+  const itemListAction = (conversationId) => {
+    dispatch({ type: "ITEM_LIST", payload: conversationId });
+  };
+
+  const itemListDeleteAction = (conversationId) => {
+    dispatch({ type: "ITEM_LIST_DELETE", payload: conversationId });
   };
 
   const inputSubmitAction = (message) => {
@@ -35,6 +39,7 @@ const ChatProvider = ({ children }) => {
   const contextValues = {
     messages: state.messages,
     itemListAction,
+    itemListDeleteAction,
     inputSubmitAction,
     newChatAction,
     newChatResponse,

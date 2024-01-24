@@ -5,7 +5,6 @@ import logo from "./../../../assets/media/images/logo.svg";
 import user from "./../../../assets/media/images/user.png";
 function ChatBubble() {
   const chatCtx = useContext(ChatContext);
-  console.log(chatCtx);
   return (
     <div className="chat--messages--area">
       {chatCtx.messages && chatCtx.messages.length > 0 ? (

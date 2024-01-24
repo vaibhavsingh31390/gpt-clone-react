@@ -1,10 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./form.module.css";
+import routes from "./../../Utils/Routes.js";
 import CustomInput from "./../UI/Elements/CustomInput";
 import CustomButton from "./../UI/Elements/CustomButton";
 import useSetActive from "./../../Hooks/ActiveHook.js";
+import ToastService from "./../UI/Toaster/ToastService.jsx";
 const RegisterForm = () => {
   const userNameRef = useRef(null);
   const userEmailRef = useRef(null);
@@ -12,16 +14,71 @@ const RegisterForm = () => {
   const userPassRef = useRef(null);
   const userCPassRef = useRef(null);
   const activeHook = useSetActive();
-  const registerHandler = (e) => {
+  const [loading, setLoading] = useState(false);
+  const registerHandler = async (e) => {
     e.preventDefault();
-    console.log([
-      userNameRef.current.value,
-      userEmailRef.current.value,
-      userAgeRef.current.value,
-      userPassRef.current.value,
-      userCPassRef.current.value,
-    ]);
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (userEmailRef.current.value === "") {
+      return ToastService("Email is required.", false);
+    } else if (userPassRef.current.value === "") {
+      return ToastService("Password is required.", false);
+    } else if (userNameRef.current.value === "") {
+      return ToastService("Username is required.", false);
+    } else if (userAgeRef.current.value === "") {
+      return ToastService("Age is required.", false);
+    } else if (userCPassRef.current.value === "") {
+      return ToastService("Confirm Password is required.", false);
+    } else if (userCPassRef.current.value !== userPassRef.current.value) {
+      return ToastService(
+        "Confirm Password should be same as password..",
+        false
+      );
+    } else if (!passwordRegex.test(userPassRef.current.value)) {
+      console.log("FALSY");
+      return ToastService(
+        "Invalid password format\n(min. 8 char using number, char. and special char.)",
+        false
+      );
+    }
+    try {
+      setLoading(true);
+      const response = await fetch(`${routes.host}${routes.register}`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: userEmailRef.current.value,
+          password: userPassRef.current.value,
+          name: userNameRef.current.value,
+          age: userAgeRef.current.value,
+          cpassword: userCPassRef.current.value,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        setLoading(false);
+        return ToastService(data.Message, false);
+      }
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("jwt", data.payload.token);
+        localStorage.setItem("user_data", JSON.stringify(data.payload.users));
+        ToastService("Registration successfully.", true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
+
   return (
     <>
       <div
@@ -48,7 +105,7 @@ const RegisterForm = () => {
               placeholder: "enter email..",
               label: "Email",
             }}
-            ref={userNameRef}
+            ref={userEmailRef}
           />
           <CustomInput
             options={{
@@ -83,6 +140,7 @@ const RegisterForm = () => {
           <CustomButton
             type={"submit"}
             value={"Submit"}
+            loader={loading}
             onClickHandler={(e) => {
               registerHandler(e);
             }}

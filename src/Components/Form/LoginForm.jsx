@@ -14,10 +14,14 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const loginHandler = async (e) => {
     e.preventDefault();
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (userEmailRef.current.value === "") {
       return ToastService("Email is required.", false);
     } else if (userPassRef.current.value === "") {
       return ToastService("Password is required.", false);
+    } else if (!passwordRegex.test(userPassRef.current.value)) {
+      return ToastService("Invalid password format.", false);
     }
     try {
       setLoading(true);

@@ -25,10 +25,9 @@ function AccountChatButton({
     e.preventDefault();
     fn2(e);
   };
-  const handleClickFn3 = (e) => {
+  const handleClickFn3 = async (e) => {
     e.preventDefault();
     fn3(e);
-    window.location.reload();
   };
   return (
     <>

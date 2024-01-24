@@ -34,11 +34,10 @@ function History() {
   }, [fetchChats]);
 
   const handleChatHistoryItemDelete = (id) => {
-    console.log("ITEM CLICKED FOR DELETE", id);
+    chatCtx.itemListDeleteAction(id);
   };
   const handleChatHistoryItem = (id) => {
-    console.log("ITEM CLICKED", id);
-    chatCtx.itemListAction();
+    chatCtx.itemListAction(id);
   };
 
   return (
