@@ -6,17 +6,19 @@ const ChatProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ChatReducer, {
     messages: [
       {
-        gpt: false,
-        message: "Lorem ipsum dolor sit amet.",
-      },
-      {
         gpt: true,
-        message:
-          "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut, sed.",
+        message: "How may I help you today ?",
       },
     ],
+    list: [],
   });
+
+  const itemListFetch = (response) => {
+    dispatch({ type: "ITEM_LIST_FETCH", payload: response });
+  };
+
   const itemListAction = (conversationId) => {
+    console.log("LIST ");
     dispatch({ type: "ITEM_LIST", payload: conversationId });
   };
 
@@ -38,7 +40,9 @@ const ChatProvider = ({ children }) => {
 
   const contextValues = {
     messages: state.messages,
+    list: state.list,
     itemListAction,
+    itemListFetch,
     itemListDeleteAction,
     inputSubmitAction,
     newChatAction,

@@ -8,6 +8,7 @@ const routes = {
   fetchAllChats: `/api/v1/chats/get`,
   fetchSingleChat: `/api/v1/chats/get/`,
   deleteSingleChat: `/api/v1/chats/delete/`,
+  sendGPT: "/api/v1/chats/send",
 };
 
 export default routes;

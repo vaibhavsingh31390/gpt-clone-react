@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import styles from "./History.module.css";
 import routes from "./../../../Utils/Routes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +8,6 @@ import ChatContext from "./../../../store/chat-context";
 
 function History() {
   const chatCtx = useContext(ChatContext);
-  const [data, setData] = useState(null);
   const ctx = useContext(AuthContext);
   const fetchChats = useCallback(async () => {
     try {
@@ -22,7 +21,7 @@ function History() {
 
       if (response.ok) {
         const data = await response.json();
-        setData(data.payload.data);
+        chatCtx.itemListFetch(data.payload.data);
       }
     } catch (error) {
       console.log(error);
@@ -33,18 +32,18 @@ function History() {
     fetchChats();
   }, [fetchChats]);
 
-  const handleChatHistoryItemDelete = (id) => {
+  const handleChatHistoryItemDelete = (id, event) => {
+    event.stopPropagation();
     chatCtx.itemListDeleteAction(id);
   };
   const handleChatHistoryItem = (id) => {
     chatCtx.itemListAction(id);
   };
-
   return (
     <>
       <ul className={`${styles["history-list"]} mt-2 py-0 px-2`}>
-        {data
-          ? data.map((list, index) => (
+        {chatCtx.list
+          ? chatCtx.list.map((list, index) => (
               <li
                 className={`${styles["history-list-item"]}`}
                 key={index}
@@ -52,15 +51,18 @@ function History() {
                   handleChatHistoryItem(list.conversationId);
                 }}
               >
-                <div className={`${styles["history-list-item-text"]}`}>
+                <div
+                  className={`${styles["history-list-item-text"]}`}
+                  title={list.message}
+                >
                   {list.message.length > 25
-                    ? list.message.substring(0, 20) + "..."
+                    ? list.message.substring(0, 23) + "..."
                     : list.message}
                 </div>
                 <div
                   className={`${styles["history-list-item-actions"]}`}
-                  onClick={() => {
-                    handleChatHistoryItemDelete(list.conversationId);
+                  onClick={(e) => {
+                    handleChatHistoryItemDelete(list.conversationId, e);
                   }}
                 >
                   <FontAwesomeIcon icon={faTrash} size="xs" />
