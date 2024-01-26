@@ -10,7 +10,7 @@ const Register = () => {
             <h1 className="text-left w-100 custom--heading">
               The ChatGPT Clone.
             </h1>
-            <span className="text-right w-100 mb-2 px-1">powered by MERN</span>
+            {/* <span className="text-right w-100 mb-2 px-1">powered by MERN</span> */}
           </div>
         </Col>
         <Col md={6} sm={12} className="d-flex align-items-center">
