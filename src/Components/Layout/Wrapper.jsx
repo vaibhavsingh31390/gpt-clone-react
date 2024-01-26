@@ -26,7 +26,6 @@ const Wrapper = (props) => {
           } p-0 h-100 `}
           style={{
             minHeight: "100svh",
-            maxHeight: "100svh",
             overflow: "hidden",
           }}
         >
