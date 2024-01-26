@@ -1,5 +1,6 @@
 .chat--messages--area {
-  max-height: 80svh;
+  flex: 8;
+  max-height: 85svh;
   overflow-y: scroll;
 }
 

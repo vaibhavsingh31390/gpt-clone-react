@@ -1,4 +1,5 @@
 .chat--input--area {
+  flex: 2;
   padding: 10px 40px;
 }
 
