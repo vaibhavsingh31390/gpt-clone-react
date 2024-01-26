@@ -10,7 +10,7 @@ const Wrapper = (props) => {
     backgroundImage: `url(${bgImage})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    minHeight: "100vh",
+    minHeight: "100svh",
   };
   return (
     <Container fluid style={backgroundStyle}>
