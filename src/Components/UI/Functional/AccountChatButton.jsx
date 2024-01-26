@@ -2,13 +2,18 @@
 import user from "./../../../assets/media/images/user.png";
 import styles from "./AccountChatButton.module.css";
 import AuthContext from "./../../../store/auth-context";
-import { useContext, useState } from "react";
-import { faGear, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { useContext, useEffect, useRef, useState } from "react";
+import {
+  faCreditCard,
+  faGear,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function AccountChatButton({
   fn1 = () => {},
   fn2 = () => {},
   fn3 = () => {},
+  fnSp = () => {},
   profileImage = user,
   menuState = false,
 }) {
@@ -29,6 +34,12 @@ function AccountChatButton({
     e.preventDefault();
     fn3(e);
   };
+
+  const handleClickFnSp = async (e) => {
+    e.preventDefault();
+    fnSp(e);
+  };
+
   return (
     <>
       <div className={`${styles["account--button--wrapper"]} py-2 px-2`}>
@@ -51,6 +62,13 @@ function AccountChatButton({
                   onClick={handleClickFn2}
                 >
                   <FontAwesomeIcon icon={faGear} /> Settings
+                </li>
+                <li
+                  className={styles["gpt-cl-btn-action-list-item"]}
+                  onClick={handleClickFnSp}
+                >
+                  <FontAwesomeIcon icon={faCreditCard} />
+                  Credits
                 </li>
                 <li
                   className={styles["gpt-cl-btn-action-list-item"]}

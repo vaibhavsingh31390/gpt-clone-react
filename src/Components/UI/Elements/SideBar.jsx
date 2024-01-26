@@ -8,6 +8,7 @@ import { UserProfileActionsReducer } from "./../../../Utils/reducers-methods.js"
 import { Col } from "react-bootstrap";
 import ChatContext from "./../../../store/chat-context.js";
 import {
+  handleCreditRequests,
   handleGenerateRandomBase64,
   handleLogoutRequest,
 } from "./../../../Utils/methods.js";
@@ -26,13 +27,16 @@ function SideBar() {
   const handleNewChat = () => {
     authCtx.groupId = handleGenerateRandomBase64();
     chatCtx.newChatAction();
-    sidebatCtx.handleSideBar();
+    sidebatCtx.isMobile ? sidebatCtx.handleSideBar() : "";
   };
   const handleUserMenu = () => {
     userActionDispatch({ type: "TOGGLE_MENU" });
   };
   const handleSettings = () => {
     userActionDispatch({ type: "SETTING" });
+  };
+  const handleCreditsReq = async () => {
+    await handleCreditRequests(authCtx);
   };
   const handleLogout = async () => {
     await handleLogoutRequest();
@@ -53,6 +57,7 @@ function SideBar() {
             fn1={handleUserMenu}
             fn2={handleSettings}
             fn3={handleLogout}
+            fnSp={handleCreditsReq}
           />
         </div>
       </div>

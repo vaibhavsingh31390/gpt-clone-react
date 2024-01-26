@@ -61,7 +61,7 @@ function History() {
     if (mcd.status) {
       chatCtx.itemListAction(flattenedArray);
       ctx.groupId = mcd.data.payload.data[0].group_id;
-      sidebatCtx.handleSideBar();
+      sidebatCtx.isMobile ? sidebatCtx.handleSideBar() : "";
     } else {
       console.log("ERROR IN FETCH");
     }

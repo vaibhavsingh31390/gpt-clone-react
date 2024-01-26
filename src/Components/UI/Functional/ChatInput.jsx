@@ -16,6 +16,14 @@ function ChatInput() {
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    let oldMessage = "";
+    if (chatCtx.messages.length > 0) {
+      oldMessage = chatCtx.messages
+        .filter((msg) => msg.gpt === false)
+        .map((msg) => msg.message)
+        .join(" ");
+    }
     const requestPayload = {
       gpt: false,
       message: searchTextRef.current.value,
@@ -27,7 +35,7 @@ function ChatInput() {
       const response = await fetch(`${routes.host}${routes.sendGPT}`, {
         method: "POST",
         body: JSON.stringify({
-          text: requestPayload.message,
+          text: `${oldMessage} ${searchTextRef.current.value}`,
           groupId: authCtx.groupId,
         }),
         headers: {

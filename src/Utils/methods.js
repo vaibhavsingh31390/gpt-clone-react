@@ -11,7 +11,7 @@ export async function handleLogoutRequest() {
       credentials: "include",
     });
     if (!response.ok) {
-      ToastService("Logout failed", false);
+      ToastService(`${response.status}  ${response.statusText}`, false);
       return false;
     }
     ToastService("Logout successful", true);
@@ -37,7 +37,7 @@ export async function handleChatFetchRequest(conversationId, ctx) {
     );
 
     if (!response.ok) {
-      ToastService("Request failed", false);
+      ToastService(`${response.status}  ${response.statusText}`, false);
       return false;
     }
 
@@ -68,7 +68,7 @@ export async function handleChatDeleteRequest(conversationId, ctx) {
     );
 
     if (!response.ok) {
-      ToastService("Request failed", false);
+      ToastService(`${response.status}  ${response.statusText}`, false);
       return false;
     }
     ToastService("Chat deleted", true);
@@ -96,6 +96,34 @@ export async function handleFetchCHats(ctx) {
   } catch (error) {
     console.log(error);
     return error;
+  }
+}
+
+export async function handleCreditRequests(ctx) {
+  try {
+    const response = await fetch(`${routes.host}${routes.freeCredit}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${ctx.jwt}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: ctx.user.id,
+        name: ctx.user.name,
+        email: ctx.user.email,
+      }),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      ToastService(`${response.status}  ${response.statusText}`, false);
+      return false;
+    }
+    ToastService("Credit request successful!", true);
+    return true;
+  } catch (error) {
+    ToastService("Request failed", false);
+    return false;
   }
 }
 

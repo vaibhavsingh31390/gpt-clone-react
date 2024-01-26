@@ -19,6 +19,12 @@ export function UserProfileActionsReducer(state, action) {
         ...state,
         menuOpen: !state.menuOpen,
       };
+    case "CREDITS":
+      console.log("GIVING CREDITS");
+      return {
+        ...state,
+        menuOpen: !state.menuOpen,
+      };
     default:
       return state;
   }
