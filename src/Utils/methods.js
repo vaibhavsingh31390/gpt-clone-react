@@ -24,25 +24,28 @@ export async function handleLogoutRequest() {
 
 export async function handleChatFetchRequest(conversationId) {
   try {
-    const response = await fetch(`${routes.host}${routes.fetchSingleChat}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: conversationId,
-      }),
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${routes.host}${routes.fetchSingleChat}${conversationId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
 
     if (!response.ok) {
-      return ToastService("Request failed", false);
+      ToastService("Request failed", false);
+      return false;
     }
 
-    return ToastService("Request successful", true);
+    const data = await response.json();
+    return { status: true, data: data };
   } catch (error) {
-    console.error("Request failed", error);
-    return ToastService("Request failed", false);
+    console.error("ERROR", error);
+    ToastService("Request failed", false);
+    return false;
   }
 }
 
@@ -72,4 +75,10 @@ export async function handleChatDeleteRequest(conversationId) {
     ToastService("Request failed", false);
     return false;
   }
+}
+
+export function handleGenerateRandomBase64() {
+  const randomString = Math.random().toString(36).substring(2, 10);
+  const base64Value = btoa(randomString);
+  return base64Value;
 }

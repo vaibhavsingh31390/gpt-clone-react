@@ -35,7 +35,6 @@ const RegisterForm = () => {
         false
       );
     } else if (!passwordRegex.test(userPassRef.current.value)) {
-      console.log("FALSY");
       return ToastService(
         "Invalid password format\n(min. 8 char using number, char. and special char.)",
         false

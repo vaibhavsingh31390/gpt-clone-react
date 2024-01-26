@@ -1,13 +1,17 @@
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import styles from "./History.module.css";
 import routes from "./../../../Utils/Routes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "./../../../store/auth-context";
 import ChatContext from "./../../../store/chat-context";
-import { handleChatDeleteRequest } from "./../../../Utils/methods";
+import {
+  handleChatDeleteRequest,
+  handleChatFetchRequest,
+} from "./../../../Utils/methods";
 
 function History() {
+  const [getToggle, setGetToggle] = useState(false);
   const chatCtx = useContext(ChatContext);
   const ctx = useContext(AuthContext);
   const fetchChats = useCallback(async () => {
@@ -31,19 +35,43 @@ function History() {
 
   useEffect(() => {
     fetchChats();
-  }, [fetchChats]);
+  }, [fetchChats, getToggle]);
 
   const handleChatHistoryItemDelete = async (id, event) => {
     event.stopPropagation();
     const mcd = await handleChatDeleteRequest(id);
     if (mcd) {
       chatCtx.itemListDeleteAction(id);
+      chatCtx.newChatAction();
+      setTimeout(() => {
+        setGetToggle((prev) => {
+          !prev;
+        });
+      }, 800);
     } else {
       console.log("ERROR IN DELETE");
     }
   };
-  const handleChatHistoryItem = (id) => {
-    chatCtx.itemListAction(id);
+  const handleChatHistoryItem = async (id) => {
+    const mcd = await handleChatFetchRequest(id);
+    const msgObject = mcd.data.payload.data.map((element) => {
+      const userMessageObject = {
+        gpt: false,
+        message: element.message,
+      };
+      const gptResponseObject = {
+        gpt: true,
+        message: element.response.choices[0].message.content,
+      };
+      return [userMessageObject, gptResponseObject];
+    });
+    const flattenedArray = msgObject.flat();
+    if (mcd.status) {
+      chatCtx.itemListAction(flattenedArray);
+      ctx.groupId = mcd.data.payload.data[0].group_id;
+    } else {
+      console.log("ERROR IN FETCH");
+    }
   };
   return (
     <>
@@ -54,7 +82,7 @@ function History() {
                 className={`${styles["history-list-item"]}`}
                 key={index}
                 onClick={() => {
-                  handleChatHistoryItem(list.conversationId);
+                  handleChatHistoryItem(list.group_id);
                 }}
               >
                 <div
@@ -68,7 +96,7 @@ function History() {
                 <div
                   className={`${styles["history-list-item-actions"]}`}
                   onClick={(e) => {
-                    handleChatHistoryItemDelete(list.conversationId, e);
+                    handleChatHistoryItemDelete(list.group_id, e);
                   }}
                 >
                   <FontAwesomeIcon icon={faTrash} size="xs" />

@@ -18,7 +18,6 @@ const ChatProvider = ({ children }) => {
   };
 
   const itemListAction = (conversationId) => {
-    console.log("LIST ");
     dispatch({ type: "ITEM_LIST", payload: conversationId });
   };
 

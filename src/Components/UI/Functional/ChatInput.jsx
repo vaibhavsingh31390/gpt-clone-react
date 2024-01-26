@@ -5,10 +5,12 @@ import CustomTextarea from "./../Elements/CustomTextarea";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpLong } from "@fortawesome/free-solid-svg-icons";
 import ChatContext from "./../../../store/chat-context";
+import AuthContext from "./../../../store/auth-context.js";
 import routes from "./../../../Utils/Routes";
 import ToastService from "../Toaster/ToastService";
 function ChatInput() {
   const chatCtx = useContext(ChatContext);
+  const authCtx = useContext(AuthContext);
   const searchTextRef = useRef("");
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
@@ -24,6 +26,7 @@ function ChatInput() {
         method: "POST",
         body: JSON.stringify({
           text: requestPayload.message,
+          groupId: authCtx.groupId,
         }),
         headers: {
           "Content-Type": "application/json",

@@ -6,9 +6,14 @@ import "./SideBar.css";
 import { UserProfileActionsReducer } from "./../../../Utils/reducers-methods.js";
 import { Col } from "react-bootstrap";
 import ChatContext from "./../../../store/chat-context.js";
-import { handleLogoutRequest } from "../../../Utils/methods.js";
+import {
+  handleGenerateRandomBase64,
+  handleLogoutRequest,
+} from "./../../../Utils/methods.js";
+import AuthContext from "./../../../store/auth-context.js";
 
 function SideBar() {
+  const authCtx = useContext(AuthContext);
   const chatCtx = useContext(ChatContext);
   const menu = { menuOpen: false };
   const [userAction, userActionDispatch] = useReducer(
@@ -16,6 +21,7 @@ function SideBar() {
     { menu }
   );
   const handleNewChat = () => {
+    authCtx.groupId = handleGenerateRandomBase64();
     chatCtx.newChatAction();
   };
   const handleUserMenu = () => {
