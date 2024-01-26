@@ -24,7 +24,11 @@ const Wrapper = (props) => {
               ? "d-flex align-items-center justify-content-center"
               : ""
           } p-0 h-100 `}
-          style={{ minHeight: "100svh" }}
+          style={{
+            minHeight: "100svh",
+            maxHeight: "100svh",
+            overflow: "hidden",
+          }}
         >
           {props.children}
         </Col>
