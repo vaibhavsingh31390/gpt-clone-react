@@ -1,12 +1,16 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import "./ChatBubble.css";
 import ChatContext from "./../../../store/chat-context";
 import logo from "./../../../assets/media/images/logo.svg";
 import user from "./../../../assets/media/images/user.png";
 function ChatBubble() {
   const chatCtx = useContext(ChatContext);
+  const chatAreaRef = useRef();
+  useEffect(() => {
+    chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
+  }, [chatCtx.messages]);
   return (
-    <div className="chat--messages--area">
+    <div className="chat--messages--area" ref={chatAreaRef}>
       {chatCtx.messages && chatCtx.messages.length > 0 ? (
         <ul>
           {chatCtx.messages.map((chat, index) => (

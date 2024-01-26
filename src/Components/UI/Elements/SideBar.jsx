@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useContext, useReducer } from "react";
 import History from "./../History/History";
 import AccountChatButton from "./../Functional/AccountChatButton";
@@ -11,10 +12,12 @@ import {
   handleLogoutRequest,
 } from "./../../../Utils/methods.js";
 import AuthContext from "./../../../store/auth-context.js";
+import { SidebarContext } from "./../../../store/SidebarContextProvide.jsx";
 
 function SideBar() {
   const authCtx = useContext(AuthContext);
   const chatCtx = useContext(ChatContext);
+  const sidebatCtx = useContext(SidebarContext);
   const menu = { menuOpen: false };
   const [userAction, userActionDispatch] = useReducer(
     UserProfileActionsReducer,
@@ -23,6 +26,7 @@ function SideBar() {
   const handleNewChat = () => {
     authCtx.groupId = handleGenerateRandomBase64();
     chatCtx.newChatAction();
+    sidebatCtx.handleSideBar();
   };
   const handleUserMenu = () => {
     userActionDispatch({ type: "TOGGLE_MENU" });

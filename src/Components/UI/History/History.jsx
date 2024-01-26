@@ -1,6 +1,5 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./History.module.css";
-import routes from "./../../../Utils/Routes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "./../../../store/auth-context";
@@ -8,38 +7,31 @@ import ChatContext from "./../../../store/chat-context";
 import {
   handleChatDeleteRequest,
   handleChatFetchRequest,
+  handleFetchCHats,
 } from "./../../../Utils/methods";
+import { SidebarContext } from "./../../../store/SidebarContextProvide";
 
 function History() {
   const [getToggle, setGetToggle] = useState(false);
   const chatCtx = useContext(ChatContext);
+  const sidebatCtx = useContext(SidebarContext);
+
   const ctx = useContext(AuthContext);
-  const fetchChats = useCallback(async () => {
-    try {
-      const response = await fetch(`${routes.host}${routes.fetchAllChats}`, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${ctx.jwt}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        chatCtx.itemListFetch(data.payload.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchChats();
-  }, [fetchChats, getToggle]);
+    const fetchData = async () => {
+      try {
+        const data = await handleFetchCHats(ctx);
+        chatCtx.itemListFetch(data.payload.data);
+      } catch (error) {
+        console.error("Error fetching chats:", error);
+      }
+    };
+    fetchData();
+  }, [getToggle]);
 
   const handleChatHistoryItemDelete = async (id, event) => {
     event.stopPropagation();
-    const mcd = await handleChatDeleteRequest(id);
+    const mcd = await handleChatDeleteRequest(id, ctx);
     if (mcd) {
       chatCtx.itemListDeleteAction(id);
       chatCtx.newChatAction();
@@ -53,7 +45,7 @@ function History() {
     }
   };
   const handleChatHistoryItem = async (id) => {
-    const mcd = await handleChatFetchRequest(id);
+    const mcd = await handleChatFetchRequest(id, ctx);
     const msgObject = mcd.data.payload.data.map((element) => {
       const userMessageObject = {
         gpt: false,
@@ -69,6 +61,7 @@ function History() {
     if (mcd.status) {
       chatCtx.itemListAction(flattenedArray);
       ctx.groupId = mcd.data.payload.data[0].group_id;
+      sidebatCtx.handleSideBar();
     } else {
       console.log("ERROR IN FETCH");
     }

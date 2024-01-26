@@ -22,7 +22,7 @@ export async function handleLogoutRequest() {
   }
 }
 
-export async function handleChatFetchRequest(conversationId) {
+export async function handleChatFetchRequest(conversationId, ctx) {
   try {
     const response = await fetch(
       `${routes.host}${routes.fetchSingleChat}${conversationId}`,
@@ -30,6 +30,7 @@ export async function handleChatFetchRequest(conversationId) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${ctx.jwt}`,
         },
         credentials: "include",
       }
@@ -49,13 +50,14 @@ export async function handleChatFetchRequest(conversationId) {
   }
 }
 
-export async function handleChatDeleteRequest(conversationId) {
+export async function handleChatDeleteRequest(conversationId, ctx) {
   try {
     const response = await fetch(
       `${routes.host}${routes.deleteSingleChat}${conversationId}`,
       {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${ctx.jwt}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -74,6 +76,26 @@ export async function handleChatDeleteRequest(conversationId) {
   } catch (error) {
     ToastService("Request failed", false);
     return false;
+  }
+}
+
+export async function handleFetchCHats(ctx) {
+  try {
+    const response = await fetch(`${routes.host}${routes.fetchAllChats}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${ctx.jwt}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
   }
 }
 

@@ -30,3 +30,8 @@
   background-color: var(--black) !important;
   color: var(--white) !important;
 }
+.chat--submit--button.disabled-btn {
+  background-color: var(--black) !important;
+  color: var(--white) !important;
+  cursor: not-allowed;
+}

@@ -1,8 +1,10 @@
+import Cookies from "js-cookie";
 export function UserProfileActionsReducer(state, action) {
   switch (action.type) {
     case "LOGOUT":
       localStorage.removeItem("jwt");
       localStorage.removeItem("user_data");
+      Cookies.remove("jwt");
       return {
         ...state,
         menuOpen: !state.menuOpen,

@@ -8,6 +8,7 @@ import ChatContext from "./../../../store/chat-context";
 import AuthContext from "./../../../store/auth-context.js";
 import routes from "./../../../Utils/Routes";
 import ToastService from "../Toaster/ToastService";
+import { handleFetchCHats } from "../../../Utils/methods.js";
 function ChatInput() {
   const chatCtx = useContext(ChatContext);
   const authCtx = useContext(AuthContext);
@@ -18,6 +19,7 @@ function ChatInput() {
     const requestPayload = {
       gpt: false,
       message: searchTextRef.current.value,
+      id: authCtx.user.id,
     };
     chatCtx.inputSubmitAction(requestPayload);
     try {
@@ -30,9 +32,11 @@ function ChatInput() {
         }),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${authCtx.jwt}`,
         },
         credentials: "include",
       });
+      searchTextRef.current.value = "";
       if (!response.ok) {
         const data = await response.json();
         setLoading(false);
@@ -44,8 +48,10 @@ function ChatInput() {
         const gptRes = data.response.choices[0].message.content;
         const demoRes = { gpt: true, message: gptRes };
         chatCtx.newChatResponse(demoRes);
-        searchTextRef.current.value = "";
+        const fetch = await handleFetchCHats(authCtx);
+        chatCtx.itemListFetch(fetch.payload.data);
       }
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -65,7 +71,10 @@ function ChatInput() {
             }}
             ref={searchTextRef}
           />
-          <Button className="chat--submit--button" type="submit">
+          <Button
+            className={`chat--submit--button ${loading ? " disabled-btn" : ""}`}
+            type="submit"
+          >
             <FontAwesomeIcon icon={faUpLong} />
           </Button>
         </Form.Group>
