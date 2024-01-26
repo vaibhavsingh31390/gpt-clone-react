@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "./../../../store/auth-context";
 import ChatContext from "./../../../store/chat-context";
+import { handleChatDeleteRequest } from "./../../../Utils/methods";
 
 function History() {
   const chatCtx = useContext(ChatContext);
@@ -32,9 +33,14 @@ function History() {
     fetchChats();
   }, [fetchChats]);
 
-  const handleChatHistoryItemDelete = (id, event) => {
+  const handleChatHistoryItemDelete = async (id, event) => {
     event.stopPropagation();
-    chatCtx.itemListDeleteAction(id);
+    const mcd = await handleChatDeleteRequest(id);
+    if (mcd) {
+      chatCtx.itemListDeleteAction(id);
+    } else {
+      console.log("ERROR IN DELETE");
+    }
   };
   const handleChatHistoryItem = (id) => {
     chatCtx.itemListAction(id);

@@ -1,8 +1,8 @@
 .gpt-cl-sidebar {
   background-color: rgba(0, 0, 0, 0.9);
   color: var(--white);
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: 100svh;
+  max-height: 100svh;
   transition: background-color 0.8s;
   overflow: hidden;
   transition: opacity 0.3s ease-in-out;

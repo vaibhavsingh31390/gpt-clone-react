@@ -1,8 +1,8 @@
 .gpt-cl-dashboard {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  height: 100vh;
+  min-height: 100svh;
+  height: 100svh;
   display: grid;
   grid-template-columns: minmax(250px, 17%) 1fr;
   transition: grid-template-columns 0.3s ease;

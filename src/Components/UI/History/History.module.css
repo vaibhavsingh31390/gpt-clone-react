@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-height: 80vh;
+  max-height: 80vsh;
 }
 
 .history-list-item-text {

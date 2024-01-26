@@ -48,22 +48,28 @@ export async function handleChatFetchRequest(conversationId) {
 
 export async function handleChatDeleteRequest(conversationId) {
   try {
-    const response = await fetch(`${routes.host}${routes.deleteSingleChat}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: conversationId,
-      }),
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${routes.host}${routes.deleteSingleChat}${conversationId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: conversationId,
+        }),
+        credentials: "include",
+      }
+    );
 
     if (!response.ok) {
-      return ToastService("Request failed", false);
+      ToastService("Request failed", false);
+      return false;
     }
-    return ToastService("Request successful", true);
+    ToastService("Chat deleted", true);
+    return true;
   } catch (error) {
-    return ToastService("Request failed", false);
+    ToastService("Request failed", false);
+    return false;
   }
 }
