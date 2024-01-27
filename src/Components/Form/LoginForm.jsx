@@ -26,8 +26,6 @@ const LoginForm = () => {
     }
     try {
       setLoading(true);
-      alert("I was triggered before reuqest");
-
       const response = await fetch(`${routes.host}${routes.login}`, {
         method: "POST",
         body: JSON.stringify({
@@ -39,18 +37,13 @@ const LoginForm = () => {
         },
         credentials: "include",
       });
-      alert("I was triggered aster request");
-
       if (!response.ok) {
         const data = await response.json();
         setLoading(false);
-        alert("I was triggered in error case");
-
         return ToastService(data.Message, false);
       }
 
       if (response.ok) {
-        alert("I was triggered on success");
         const data = await response.json();
         localStorage.setItem("jwt", data.payload.token);
         localStorage.setItem("user_data", JSON.stringify(data.payload.users));
@@ -62,7 +55,6 @@ const LoginForm = () => {
         console.log(data);
       }
     } catch (error) {
-      alert("I was triggered on catch block", error);
       console.log(error);
       setLoading(false);
     }
