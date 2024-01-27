@@ -14,7 +14,6 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const loginHandler = async (e) => {
     e.preventDefault();
-    alert("I was triggered");
     const passwordRegex =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (userEmailRef.current.value === "") {
