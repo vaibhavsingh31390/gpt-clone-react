@@ -62,6 +62,7 @@ const LoginForm = () => {
         console.log(data);
       }
     } catch (error) {
+      alert("I was triggered on catch block", error);
       console.log(error);
       setLoading(false);
     }
