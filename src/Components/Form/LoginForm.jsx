@@ -14,6 +14,7 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const loginHandler = async (e) => {
     e.preventDefault();
+    alert("I was triggered");
     const passwordRegex =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (userEmailRef.current.value === "") {
@@ -25,6 +26,8 @@ const LoginForm = () => {
     }
     try {
       setLoading(true);
+      alert("I was triggered before reuqest");
+
       const response = await fetch(`${routes.host}${routes.login}`, {
         method: "POST",
         body: JSON.stringify({
@@ -36,13 +39,18 @@ const LoginForm = () => {
         },
         credentials: "include",
       });
+      alert("I was triggered aster request");
+
       if (!response.ok) {
         const data = await response.json();
         setLoading(false);
+        alert("I was triggered in error case");
+
         return ToastService(data.Message, false);
       }
 
       if (response.ok) {
+        alert("I was triggered on success");
         const data = await response.json();
         localStorage.setItem("jwt", data.payload.token);
         localStorage.setItem("user_data", JSON.stringify(data.payload.users));

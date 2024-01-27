@@ -12,11 +12,11 @@ import { handleFetchCHats } from "../../../Utils/methods.js";
 function ChatInput() {
   const chatCtx = useContext(ChatContext);
   const authCtx = useContext(AuthContext);
-  const searchTextRef = useRef("");
+  const searchTextRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    if (searchTextRef.current.value.length === 0) return;
     let oldMessage = "";
     if (chatCtx.messages.length > 0) {
       oldMessage = chatCtx.messages
@@ -66,6 +66,8 @@ function ChatInput() {
       return ToastService("Something went wrong.", false);
     }
   };
+
+  console.log(searchTextRef.length);
   return (
     <div className="chat--input--area d-flex align-items-center justify-content-center">
       <Form onSubmit={handleSubmit} className="w-100">
@@ -80,7 +82,7 @@ function ChatInput() {
             ref={searchTextRef}
           />
           <Button
-            className={`chat--submit--button ${loading ? " disabled-btn" : ""}`}
+            className={`chat--submit--button${loading ? " disabled-btn" : ""}`}
             type="submit"
           >
             <FontAwesomeIcon icon={faUpLong} />
