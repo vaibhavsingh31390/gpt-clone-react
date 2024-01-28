@@ -39,7 +39,7 @@ function SideBar() {
     await handleCreditRequests(authCtx);
   };
   const handleLogout = async () => {
-    await handleLogoutRequest();
+    await handleLogoutRequest(authCtx);
     userActionDispatch({ type: "LOGOUT" });
     window.location.reload();
   };

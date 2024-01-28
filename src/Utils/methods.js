@@ -1,12 +1,13 @@
 import ToastService from "./../Components/UI/Toaster/ToastService";
 import routes from "./Routes";
 
-export async function handleLogoutRequest() {
+export async function handleLogoutRequest(ctx) {
   try {
     const response = await fetch(`${routes.host}${routes.logout}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${ctx.jwt}`,
       },
       credentials: "include",
     });
