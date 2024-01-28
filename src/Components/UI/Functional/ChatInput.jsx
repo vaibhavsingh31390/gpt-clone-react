@@ -50,7 +50,6 @@ function ChatInput() {
         setLoading(false);
         const msg = data.Message.split("\n");
         if (chatCtx.messages.length === 1) {
-          console.log(msg);
           chatCtx.newChatAction(msg[1]);
         }
         return ToastService(msg[0], false);
