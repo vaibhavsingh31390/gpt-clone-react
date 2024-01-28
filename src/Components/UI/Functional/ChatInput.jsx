@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useContext, useRef, useState } from "react";
 import "./ChatInput.css";
 import { Form, Button } from "react-bootstrap";
@@ -9,11 +10,10 @@ import AuthContext from "./../../../store/auth-context.js";
 import routes from "./../../../Utils/Routes";
 import ToastService from "../Toaster/ToastService";
 import { handleFetchCHats } from "../../../Utils/methods.js";
-function ChatInput() {
+function ChatInput(props) {
   const chatCtx = useContext(ChatContext);
   const authCtx = useContext(AuthContext);
   const searchTextRef = useRef(null);
-  const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (searchTextRef.current.value.length === 0) return;
@@ -31,7 +31,8 @@ function ChatInput() {
     };
     chatCtx.inputSubmitAction(requestPayload);
     try {
-      setLoading(true);
+      searchTextRef.current.value = "";
+      props.setLoading(true);
       const response = await fetch(`${routes.host}${routes.sendGPT}`, {
         method: "POST",
         body: JSON.stringify({
@@ -44,10 +45,9 @@ function ChatInput() {
         },
         credentials: "include",
       });
-      searchTextRef.current.value = "";
       if (!response.ok) {
         const data = await response.json();
-        setLoading(false);
+        props.setLoading(false);
         const msg = data.Message.split("\n");
         if (chatCtx.messages.length === 1) {
           chatCtx.newChatAction(msg[1]);
@@ -57,16 +57,16 @@ function ChatInput() {
 
       if (response.ok) {
         const data = await response.json();
+        props.setLoading(false);
         const gptRes = data.response.choices[0].message.content;
         const demoRes = { gpt: true, message: gptRes };
         chatCtx.newChatResponse(demoRes);
         const fetch = await handleFetchCHats(authCtx);
         chatCtx.itemListFetch(fetch.payload.data);
       }
-      setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      props.setLoading(false);
       return ToastService("Something went wrong.", false);
     }
   };
@@ -85,7 +85,9 @@ function ChatInput() {
             ref={searchTextRef}
           />
           <Button
-            className={`chat--submit--button${loading ? " disabled-btn" : ""}`}
+            className={`chat--submit--button${
+              props.loading ? " disabled-btn" : ""
+            }`}
             type="submit"
           >
             <FontAwesomeIcon icon={faUpLong} />
