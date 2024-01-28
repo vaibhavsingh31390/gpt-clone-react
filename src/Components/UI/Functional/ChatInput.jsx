@@ -48,7 +48,7 @@ function ChatInput() {
       if (!response.ok) {
         const data = await response.json();
         setLoading(false);
-        if (chatCtx.messages.length === 0) {
+        if (chatCtx.messages.length === 1) {
           chatCtx.newChatAction();
         }
         return ToastService(data.Message, false);
@@ -70,7 +70,6 @@ function ChatInput() {
     }
   };
 
-  console.log(searchTextRef.length);
   return (
     <div className="chat--input--area d-flex align-items-center justify-content-center">
       <Form onSubmit={handleSubmit} className="w-100">
