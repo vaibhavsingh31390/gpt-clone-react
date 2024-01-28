@@ -31,12 +31,13 @@ function ChatInput(props) {
     };
     chatCtx.inputSubmitAction(requestPayload);
     try {
+      const text = searchTextRef.current.value;
       searchTextRef.current.value = "";
       props.setLoading(true);
       const response = await fetch(`${routes.host}${routes.sendGPT}`, {
         method: "POST",
         body: JSON.stringify({
-          text: `${oldMessage} ${searchTextRef.current.value}`,
+          text: `${oldMessage} ${text}`,
           groupId: authCtx.groupId,
         }),
         headers: {
