@@ -29,8 +29,8 @@ const ChatProvider = ({ children }) => {
     dispatch({ type: "INPUT_SUBMIT", payload: message });
   };
 
-  const newChatAction = () => {
-    dispatch({ type: "NEW_CHAT" });
+  const newChatAction = (message = "") => {
+    dispatch({ type: "NEW_CHAT", payload: message });
   };
 
   const newChatResponse = (message) => {

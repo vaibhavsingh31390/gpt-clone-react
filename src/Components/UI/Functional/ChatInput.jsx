@@ -48,10 +48,12 @@ function ChatInput() {
       if (!response.ok) {
         const data = await response.json();
         setLoading(false);
+        const msg = data.Message.split("\n");
         if (chatCtx.messages.length === 1) {
-          chatCtx.newChatAction();
+          console.log(msg);
+          chatCtx.newChatAction(msg[1]);
         }
-        return ToastService(data.Message, false);
+        return ToastService(msg[0], false);
       }
 
       if (response.ok) {

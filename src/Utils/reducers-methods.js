@@ -84,7 +84,10 @@ export function ChatReducer(state, action) {
         messages: [
           {
             gpt: true,
-            message: "How may I help you today ?",
+            message:
+              action.payload.length > 0
+                ? action.payload
+                : "How may I help you today ?",
           },
         ],
       };
