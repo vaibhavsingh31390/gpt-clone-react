@@ -26,7 +26,11 @@ function ChatBubble() {
               <div className="text">
                 <b>{chat.gpt ? "GPT" : "YOU"}</b>
                 <br />
-                {chat.message}
+                {chat.message.split("\n").map((line, lineIndex) => (
+                  <p key={lineIndex} className="m-0 res-font">
+                    {line}
+                  </p>
+                ))}
               </div>
             </li>
           ))}
