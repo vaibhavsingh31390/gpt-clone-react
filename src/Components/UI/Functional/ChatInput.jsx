@@ -48,6 +48,9 @@ function ChatInput() {
       if (!response.ok) {
         const data = await response.json();
         setLoading(false);
+        if (chatCtx.messages.length === 0) {
+          chatCtx.newChatAction();
+        }
         return ToastService(data.Message, false);
       }
 
